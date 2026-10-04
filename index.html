@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>হিসাব ঘর – বয়স, EMI ও BMI ক্যালকুলেটর</title>
+<meta name="description" content="ফ্রি বাংলা অনলাইন ক্যালকুলেটর: বয়স ক্যালকুলেটর, EMI/লোন ক্যালকুলেটর এবং BMI ক্যালকুলেটর।">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6f4;--card:#fff;--ink:#14302b;--mute:#5b706b;--line:#d3ddd9;--acc:#0f766e;--accInk:#fff;--out:#e3f1ee;box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1b18;--card:#152723;--ink:#e6f1ee;--mute:#9db5af;--line:#2a403b;--acc:#2dd4bf;--accInk:#06231f;--out:#183530}}
+*{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Hind Siliguri",system-ui,sans-serif}
+header{padding:28px 16px 8px;max-width:720px;margin:auto}
+h1{font-size:1.9rem;margin:0 0 4px}
+header p{margin:0;color:var(--mute)}
+nav{display:flex;gap:8px;max-width:720px;margin:14px auto 0;padding:0 16px;overflow-x:auto}
+nav button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;padding:8px 16px;border-radius:999px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--acc);color:var(--accInk);border-color:var(--acc);font-weight:700}
+main{max-width:720px;margin:auto;padding:16px}
+section{display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+section.on{display:block}
+h2{margin:0 0 12px;font-size:1.3rem}
+label{display:block;margin:12px 0 4px;font-weight:500}
+input{width:100%;padding:10px 12px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px}
+input:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.go{margin-top:16px;width:100%;padding:12px;border:0;border-radius:8px;background:var(--acc);color:var(--accInk);font:700 1rem "Hind Siliguri",sans-serif;cursor:pointer}
+.out{margin-top:16px;padding:14px;border-radius:8px;background:var(--out);min-height:1.5em}
+.out b{font-size:1.2em}
+.ad{margin:16px 0;padding:18px;text-align:center;border:1px dashed var(--line);color:var(--mute);border-radius:8px;font-size:.85rem}
+footer{max-width:720px;margin:auto;padding:8px 16px 32px;color:var(--mute);font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+<h1>হিসাব ঘর</h1>
+<p>বয়স, লোন কিস্তি ও BMI – এক জায়গায় ফ্রি হিসাব</p>
+</header>
+<nav role="tablist">
+<button role="tab" aria-selected="true" data-t="age">বয়স</button>
+<button role="tab" aria-selected="false" data-t="emi">EMI / লোন</button>
+<button role="tab" aria-selected="false" data-t="bmi">BMI</button>
+</nav>
+<main>
+<div class="ad"><!-- এখানে AdSense কোড বসান -->বিজ্ঞাপনের জায়গা</div>
+
+<section id="age" class="on">
+<h2>বয়স ক্যালকুলেটর</h2>
+<label for="dob">জন্ম তারিখ</label>
+<input type="date" id="dob">
+<button class="go" onclick="calcAge()">বয়স দেখুন</button>
+<div class="out" id="ageOut" aria-live="polite"></div>
+</section>
+
+<section id="emi">
+<h2>EMI / লোন ক্যালকুলেটর</h2>
+<label for="amt">লোনের পরিমাণ (টাকা)</label>
+<input type="number" id="amt" inputmode="decimal" placeholder="500000">
+<label for="rate">বার্ষিক সুদের হার (%)</label>
+<input type="number" id="rate" inputmode="decimal" placeholder="12">
+<label for="mon">মেয়াদ (মাস)</label>
+<input type="number" id="mon" inputmode="numeric" placeholder="36">
+<button class="go" onclick="calcEmi()">কিস্তি হিসাব করুন</button>
+<div class="out" id="emiOut" aria-live="polite"></div>
+</section>
+
+<section id="bmi">
+<h2>BMI ক্যালকুলেটর</h2>
+<label for="kg">ওজন (কেজি)</label>
+<input type="number" id="kg" inputmode="decimal" placeholder="65">
+<label for="cm">উচ্চতা (সেন্টিমিটার)</label>
+<input type="number" id="cm" inputmode="decimal" placeholder="165">
+<button class="go" onclick="calcBmi()">BMI দেখুন</button>
+<div class="out" id="bmiOut" aria-live="polite"></div>
+</section>
+
+<div class="ad"><!-- দ্বিতীয় বিজ্ঞাপন -->বিজ্ঞাপনের জায়গা</div>
+</main>
+<footer>এই হিসাব শুধু ধারণা দেওয়ার জন্য। চূড়ান্ত সিদ্ধান্তের আগে ব্যাংক বা বিশেষজ্ঞের সাথে কথা বলুন।</footer>
+
+<script>
+var bn="০১২৩৪৫৬৭৮৯";
+function b(n){return String(n).replace(/\d/g,function(d){return bn[d]})}
+function f(n,d){return b(Number(n).toLocaleString("en-US",{maximumFractionDigits:d==null?2:d}))}
+document.querySelectorAll("nav button").forEach(function(btn){
+  btn.onclick=function(){
+    document.querySelectorAll("nav button").forEach(function(x){x.setAttribute("aria-selected",x===btn)});
+    document.querySelectorAll("section").forEach(function(s){s.classList.toggle("on",s.id===btn.dataset.t)});
+  };
+});
+function calcAge(){
+  var v=document.getElementById("dob").value,o=document.getElementById("ageOut");
+  if(!v){o.textContent="জন্ম তারিখ দিন।";return}
+  var d=new Date(v),n=new Date();
+  if(d>n){o.textContent="জন্ম তারিখ ভবিষ্যতের হতে পারে না।";return}
+  var y=n.getFullYear()-d.getFullYear(),m=n.getMonth()-d.getMonth(),dd=n.getDate()-d.getDate();
+  if(dd<0){m--;dd+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}
+  if(m<0){y--;m+=12}
+  var days=Math.floor((n-d)/864e5);
+  o.innerHTML="আপনার বয়স <b>"+b(y)+" বছর "+b(m)+" মাস "+b(dd)+" দিন</b><br>মোট "+f(days,0)+" দিদিO
+
+
+  var days=Math.floor((n-d)/864e5);
+  o.innerHTML="আপনার বয়স <b>"+b(y)+" বছর "+b(m)+" মাস "+b(dd)+" দিন</b><br>মোট "+f(days,0)+" দিন";
+}
+function calcEmi(){
+  var P=+document.getElementById("amt").value,R=+document.getElementById("rate").value,N=+document.getElementById("mon").value,o=document.getElementById("emiOut");
+  if(!(P>0&&N>0&&R>=0)){o.textContent="সব ঘরে সঠিক সংখ্যা দিন।";return}
+  var r=R/1200,e=r===0?P/N:P*r*Math.pow(1+r,N)/(Math.pow(1+r,N)-1),t=e*N;
+  o.innerHTML="মাসিক কিস্তি <b>"+f(e)+" টাকা</b><br>মোট পরিশোধ "+f(t)+" টাকা<br>মোট সুদ "+f(t-P)+" টাকা";
+}
+function calcBmi(){
+  var w=+document.getElementById("kg").value,h=+document.getElementById("cm").value/100,o=document.getElementById("bmiOut");
+  if(!(w>0&&h>0)){o.textContent="ওজন ও উচ্চতা দিন।";return}
+  var x=w/(h*h),s=x<18.5?"কম ওজন":x<25?"স্বাভাবিক":x<30?"বেশি ওজন":"স্থূলতা";
+  o.innerHTML="আপনার BMI <b>"+f(x,1)+"</b> – "+s;
+}
+</script>
+</body>
+</html>
