@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://financeunpacked4-png.github.io/sitemap.xml
