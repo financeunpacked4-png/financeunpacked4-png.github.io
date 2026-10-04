@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>শতকরা (%) ক্যালকুলেটর – হিসাব ঘর</title>
+<meta name="description" content="ফ্রি বাংলা শতকরা হিসাব: কোনো সংখ্যার শতকরা কত, একটি সংখ্যা আরেকটির কত শতাংশ, শতকরা বাড়া-কমা।">
+<style>
+:root{--bg:#f3f6f4;--card:#fff;--ink:#14302b;--line:#d3ddd9;--acc:#0f766e;--accInk:#fff;--out:#e3f1ee}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1b18;--card:#152723;--ink:#e6f1ee;--line:#2a403b;--acc:#2dd4bf;--accInk:#06231f;--out:#183530}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 system-ui,sans-serif}
+main{max-width:720px;margin:auto;padding:16px}
+h1{font-size:1.7rem;margin:12px 0}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+h2{font-size:1.15rem;margin:0 0 8px}
+input{width:100%;padding:10px;margin:6px 0;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px}
+button{width:100%;margin-top:8px;padding:12px;border:0;border-radius:8px;background:var(--acc);color:var(--accInk);font:700 1rem system-ui,sans-serif;cursor:pointer}
+.out{margin-top:10px;padding:12px;border-radius:8px;background:var(--out);min-height:1.5em}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<h1>শতকরা (%) ক্যালকুলেটর</h1>
+
+<section>
+<h2>১. কোনো সংখ্যার শতকরা কত?</h2>
+<input id="a1" type="number" inputmode="decimal" placeholder="শতকরা হার (যেমন ১৫)">
+<input id="b1" type="number" inputmode="decimal" placeholder="মূল সংখ্যা (যেমন ২০০০)">
+<button onclick="c1()">হিসাব করুন</button>
+<div class="out" id="r1" aria-live="polite"></div>
+</section>
+
+<section>
+<h2>২. একটি সংখ্যা আরেকটির কত শতাংশ?</h2>
+<input id="a2" type="number" inputmode="decimal" placeholder="প্রথম সংখ্যা (যেমন ৫০)">
+<input id="b2" type="number" inputmode="decimal" placeholder="মোট সংখ্যা (যেমন ২০০)">
+<button onclick="c2()">হিসাব করুন</button>
+<div class="out" id="r2" aria-live="polite"></div>
+</section>
+
+<section>
+<h2>৩. শতকরা বাড়া বা কমা</h2>
+<input id="a3" type="number" inputmode="decimal" placeholder="মূল সংখ্যা (যেমন ১০০০)">
+<input id="b3" type="number" inputmode="decimal" placeholder="শতকরা হার (যেমন ১০)">
+<button onclick="c3()">হিসাব করুন</button>
+<div class="out" id="r3" aria-live="polite"></div>
+</section>
+
+<p><a href="index.html">← সব ক্যালকুলেটর</a></p>
+</main>
+<script>
+var bn="০১২৩৪৫৬৭৮৯";
+function f(n){return Number(n).toLocaleString("en-US",{maximumFractionDigits:2}).replace(/\d/g,function(d){return bn[d]})}
+function g(id){return parseFloat(document.getElementById(id).value)}
+function o(id,h){document.getElementById(id).innerHTML=h}
+function c1(){
+  var a=g("a1"),b=g("b1");
+  if(isNaN(a)||isNaN(b)){o("r1","দুটি ঘরেই সংখ্যা দিন।");return}
+  o("r1",f(b)+" এর "+f(a)+"% = <b>"+f(a*b/100)+"</b>");
+}
+function c2(){
+  var a=g("a2"),b=g("b2");
+  if(isNaN(a)||isNaN(b)||b===0){o("r2","সঠিক সংখ্যা দিন (মোট সংখ্যা শূন্য হবে না)।");return}
+  o("r2",f(a)+" হলো "+f(b)+" এর <b>"+f(a/b*100)+"%</b>");
+}
+function c3(){
+  var a=g("a3"),b=g("b3");
+  if(isNaN(a)||isNaN(b)){o("r3","দুটি ঘরেই সংখ্যা দিন।");return}
+  o("r3",f(b)+"% বাড়লে: <b>"+f(a*(1+b/100))+"</b><br>"+f(b)+"% কমলে: <b>"+f(a*(1-b/100))+"</b>");
+}
+</script>
+</body>
+</html>
