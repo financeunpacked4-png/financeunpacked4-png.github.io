@@ -97,10 +97,6 @@ function calcAge(){
   if(dd<0){m--;dd+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}
   if(m<0){y--;m+=12}
   var days=Math.floor((n-d)/864e5);
-  o.innerHTML="আপনার বয়স <b>"+b(y)+" বছর "+b(m)+" মাস "+b(dd)+" দিন</b><br>মোট "+f(days,0)+" দিদিO
-
-
-  var days=Math.floor((n-d)/864e5);
   o.innerHTML="আপনার বয়স <b>"+b(y)+" বছর "+b(m)+" মাস "+b(dd)+" দিন</b><br>মোট "+f(days,0)+" দিন";
 }
 function calcEmi(){
